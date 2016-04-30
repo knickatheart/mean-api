@@ -1,0 +1,17 @@
+{
+  "name": "mean-api",
+  "version": "1.0.0",
+  "description": "Make REST API calls in JavaScript even if you have no knowledge of NodeJS whatsoever",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "knickatheart",
+  "license": "MIT",
+  "devDependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "fs": "0.0.2",
+    "mongoose": "^4.4.14"
+  }
+}
