@@ -11,6 +11,10 @@ The only thing you need to do is creating your API file within the api folder an
 
 ### Version
 1.0.0
+Notes: First commits
+
+1.0.1
+Notes: CoffeeScript conversion
 
 ### Tech
 
