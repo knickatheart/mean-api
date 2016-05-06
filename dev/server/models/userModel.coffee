@@ -1,3 +1,4 @@
+# @author Gianluigi Mango
 # User Model
 mongoose = require 'mongoose'
 

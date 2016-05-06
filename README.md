@@ -10,11 +10,14 @@ No need to mess around with the ExpressJS framework at all, Routers and so on.
 The only thing you need to do is creating your API file within the api folder and start coding!
 
 ### Version
-1.0.0
-Notes: First commits
+1.0.0 
+ - First commits
 
-1.0.1
-Notes: CoffeeScript conversion
+1.0.1 
+ - CoffeeScript conversion
+
+1.0.2
+ - Bcrypt, client sessions, more structured API, Notifier utility
 
 ### Tech
 
@@ -24,6 +27,8 @@ Stack used to make this work:
 * [Mongoose] - elegant mongodb object modeling for node.js
 * [Body Parser] - node.js body parsing middleware
 * [Fs] - strengthen the ability of file system
+* [Client Sessions] - cookie session for NodeJS, store session in client browers's cookie
+* [Bcrypt] - a native JS bcrypt library for NodeJS
 
 And of course this is an open source project with a [public repository][dill]
  on GitHub.
@@ -36,6 +41,8 @@ Not needed buddy! Just clone the repo
 $ git clone https://github.com/knickatheart/mean-api.git
 $ cd mean-api
 $ npm install
+$ grunt
+$ node dist/app.js
 ```
 
 ### Development
@@ -66,3 +73,5 @@ MIT
    [Mongoose]: <http://mongoosejs.com/>
    [body parser]: <https://www.npmjs.com/package/body-parser-json>
    [fs]: <https://www.npmjs.com/package/file-system>
+   [client sessions]: <https://www.npmjs.com/package/client-session>
+   [bcrypt]: <https://www.npmjs.com/package/bcrypt-nodejs>
