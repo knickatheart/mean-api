@@ -23,7 +23,12 @@ app.use session
 
 db.connect()
 
+app.use '', express.static __dirname
+
 app.use '/api', (req, res) ->
 	if req and req.url != '/' then api req, res, req.body else res.send error: 'No endpoint specified'
+
+app.use '/*', (req, res) ->
+	res.sendFile __dirname + '/index.html'
 
 module.exports = app

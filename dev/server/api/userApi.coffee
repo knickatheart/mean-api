@@ -13,6 +13,7 @@ module.exports = class UserApi
 			when 'addUser' then @userHandler.addUser @path, @res
 			when 'deleteUser' then @userHandler.deleteUser @path, @res
 			when 'login' then @userHandler.loginUser @path, @res
-			when 'checkUser' then @userHandler
+			when 'logout' then @userHandler.logout @path, @res
+			when 'checkUser' then @userHandler.checkSession @req, @res
 
 			else res.send Error: 'No method found'

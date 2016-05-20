@@ -1,6 +1,8 @@
 # @author Gianluigi Mango
 # Query User Collection
 User = require './../../models/userModel'
+Image = require './../../models/imageModel'
+Post = require './../../models/postModel'
 
 module.exports = class UserModel
 
@@ -8,7 +10,10 @@ module.exports = class UserModel
 	# @params user[String], cb[Function]
 	# @return callback
 	findUser: (user, cb) ->
-		User.find userid: user, (err, body) ->
+		User.find userid: user
+		.populate path: 'images', model: Image
+		.populate path: 'posts', model: Post
+		.exec (err, body) ->
 			unless err then (if body.length then cb body else cb false) else console.log err
 
 	# Add one user to the collection
@@ -28,4 +33,13 @@ module.exports = class UserModel
 	# @return callback
 	deleteUser: (id, cb) ->
 		User.remove _id: id, (err, body) ->
+			cb err, body
+
+	# Find one user in collection by ID
+	# @params id[String], cb[Function]
+	# @return callback
+	findByUserId: (id, cb) ->
+		User.findById id
+		.populate path: 'images', model: Image
+		.exec (err, body) ->
 			cb err, body

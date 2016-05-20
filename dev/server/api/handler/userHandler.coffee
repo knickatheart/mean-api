@@ -1,6 +1,8 @@
 # @author Gianluigi Mango
 # Handle User API
 UserModel = require './../model/userModel'
+PostModel = require './../model/postModel'
+PostHandler = require './postHandler'
 Notify = require './../utils/Notifier'
 bcrypt = require 'bcrypt-nodejs'
 
@@ -8,12 +10,23 @@ module.exports = class userHandler
 	# Check if there is an active session
 	constructor: (@req) ->
 		@userModel = new UserModel
+		@postModel = new PostModel
+		@postHandler = new PostHandler
 
-		if @req.session?.user?.active then new Notify @req.session.user.userid, res, false else new Notify 'User not in session', res, 1
+	checkSession: (req, res) ->
+		if not req.session.user then new Notify 'Not in session', res, 1 else new Notify req.session.user, res, false
 
-	getInfo: (path, res, notify) ->
-		@userModel.findUser path[0][1], (exists) ->
-			if exists? then new Notify exists, res, false else new Notify 'User does not exist', res, true
+	getInfo: (path, res) ->
+		@userModel.findUser path[0][1], (exists) =>
+			if exists
+				@postModel.getAll exists[0]._id, (err, body) ->
+					if not err
+						exists.push body
+						new Notify exists, res, false
+					else 
+						new Notify err, res, true
+			else
+				new Notify 'User does not exist', res, true
 
 	addUser: (path, res) ->
 		@userModel.findUser path[0][1], (exists) =>
@@ -44,14 +57,24 @@ module.exports = class userHandler
 		@userModel.findUser path[0][1], (exists) =>
 			if exists
 				if bcrypt.compareSync path[1][1], exists[0].password
-					@setSession exists, res
+					@postHandler.getAll exists[0]._id, (err, body) =>
+						if not err
+							exists.push body
+							console.log body
+							@setSession exists, res
+						else 
+							new Notify err, res, true
 				else
 					new Notify 'Wrong password', res, true
 			else
 				new Notify 'User not found', res, true
 
+	logout: (path, res) ->
+		@req.session.reset()
+		new Notify 'User logged out', res, false
+
 	setSession: (user, res) ->
 		@req.session.user = user[0]
 		res.locals.user = user[0]
 
-		new Notify user[0].userid + ' logged in', res, false
+		new Notify user, res, false

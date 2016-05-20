@@ -19,6 +19,9 @@ The only thing you need to do is creating your API file within the api folder an
 1.0.2
  - Bcrypt, client sessions, more structured API, Notifier utility
 
+1.0.3
+ - More examples added
+
 ### Tech
 
 Stack used to make this work:
